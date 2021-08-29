@@ -1,0 +1,31 @@
+<% include ../../helpers/sing-in %>
+<div class="container" id="container">
+	<div class="form-container sign-in-container" >
+		<% if(notify.length > 0) { %>
+			<div class="notify">
+				<i class="fas fa-exclamation-triangle icon-warning"></i>
+				<span><%= notify[0].msg %> </span>
+			</div>
+		<% } %> 
+		<form action="<%= systemConfig.prefixUsers %>accounts/sing-in" method="POST">
+			<h1>Đăng nhập</h1>
+			<div class="social-container">
+				<a href="#" class="social" id="sing-in"><i class="fab fa-facebook-f"></i></a>
+				<a href="#" class="social" id="sing-in"><i class="fab fa-google-plus-g"></i></a>
+			</div>
+			<span>hoặc đăng nhập bằng E-Mail</span>
+			<%- singInHelper(item,err) %> 
+			<a href="#">Quên mật khẩu</a>
+			<button id="sing-in" >Đăng nhập</button>
+		</form>
+	</div>
+	<div class="overlay-container-right">
+		<div class="overlay overlay-right">
+			<div class="overlay-panel overlay-right">
+				<h1>Xin chào!</h1>
+				<p>Nhập thông tin cá nhân của bạn và bắt đầu hành trình với chúng tôi</p>
+				<a href="<%= systemConfig.prefixUsers %>accounts/sing-up" class="ghost" id="signUp">Đăng kí</a>
+			</div>
+		</div>
+	</div>
+</div>

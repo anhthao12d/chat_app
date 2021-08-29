@@ -1,0 +1,24 @@
+<% include ../../helpers/sing-up %>
+<div class="container">
+	<div class="form-container sign-up-container">
+		<form action="<%= systemConfig.prefixUsers %>accounts/sing-up" method="POST">
+			<h1>Tạo tài khoản</h1>
+			<div class="social-container">
+				<a href="#" class="social" id="sing-up"><i class="fab fa-facebook-f"></i></a>
+				<a href="#" class="social" id="sing-up"><i class="fab fa-google-plus-g"></i></a>
+			</div>
+			<span>hoặc sử dụng E-Mail của bạn để đăng ký</span>
+			<%- singUpHelper(item,err) %> 
+			<button style="margin-top: 10px;" id="sing-up" >Đăng kí</button>
+		</form>
+	</div>
+	<div class="overlay-container-left">
+		<div class="overlay-left">
+			<div class="overlay-panel overlay-left">
+				<h1>Chào bạn!</h1>
+				<p>Để giữ kết nối với chúng tôi, vui lòng đăng nhập bằng thông tin cá nhân của bạn</p>
+				<a href="<%= systemConfig.prefixUsers %>accounts/sing-in" class="ghost" id="signIn">Đăng nhập</a>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,46 @@
+<% 
+    singUpHelper = (data,err,options = null) => {
+       
+        let name = `<div class='login-register'><i class="fas fa-user icon-input"></i><input value="${data.name}" name="name" type="text" placeholder="Tên" /></div>`
+        let email = `<div class='login-register'><i class="fas fa-envelope icon-input"></i><input  value="${data.email}" name="email" type="email" placeholder="Email" /></div>`
+        let password = `<div class='login-register'><i class="fas fa-lock icon-input"></i><i class="fas fa-eye" id="show-hidden-password" data-show="fas fa-eye" data-hidden="fas fa-eye-slash"></i>
+                        <input value="${data.password}" name="password" id='password' type="password" placeholder="Mật khẩu" /></div>`
+        let param = [];
+        err.forEach( async(element) => {
+            await param.push(element.param)
+        });
+       
+        if(err.length > 0){
+            if(param.indexOf('name') != -1) {
+                let  index = param.indexOf('name');
+                name = `<div class='login-register'><i class="fas fa-user icon-input"></i><input value="${data.name}" class="input errors" name="name" type="text" placeholder="Tên" />
+                    <span ><i class="fas fa-exclamation-triangle"></i>  ${err[index].msg}</span></div>`
+            } else {
+                name = `<div class='login-register'><i class="fas fa-user icon-input"></i><input value="${data.name}" class="success-input" name="name" type="text" placeholder="Tên" /></div>`
+            }
+
+            if(param.indexOf('email') != -1){
+                let  index = param.indexOf('email');
+                email = `<div class='login-register'><i class="fas fa-envelope icon-input"></i><input value="${data.email}" class="input errors" name="email" type="email" placeholder="Email" />
+                    <span ><i class="fas fa-exclamation-triangle"></i>  ${err[index].msg}</span></div>`
+            } else {
+                email = `<div class='login-register'><i class="fas fa-envelope icon-input"></i><input value="${data.email}" class="success-input" name="email" type="email" placeholder="Email" /></div>`
+            }
+
+            if(param.indexOf('password') != -1) {
+                let  index = param.indexOf('password');
+                password = `<div class='login-register'><i class="fas fa-lock icon-input"></i><i class="fas fa-eye" id="show-hidden-password" data-show="fas fa-eye" data-hidden="fas fa-eye-slash"></i><input value="${data.password}" id='password' class="input errors" name="password" type="password" placeholder="Mật khẩu" />
+                    <span ><i class="fas fa-exclamation-triangle"></i>  ${err[index].msg}</span></div>`
+            } else {
+                password = `<div class='login-register'><i class="fas fa-lock icon-input"></i><i class="fas fa-eye" id="show-hidden-password" data-show="fas fa-eye" data-hidden="fas fa-eye-slash"></i>
+                            <input value="${data.password}" id='password' class="success-input" name="password" type="password" placeholder="Mật khẩu" /></div>`
+            }
+        }
+        return `
+                ${name}
+                ${email}
+                ${password}
+                    `
+        
+    }
+%>

@@ -6,4 +6,9 @@ module.exports = {
     folder_configs       : 'configs',
     folder_models        : 'models',
     folder_users         : 'users',
+    folder_validators         : 'validators',
+    folder_helpers         : 'helpers',
+    folder_schemas         : 'schemas',
+    folder_models_admin         : 'admin',
+    folder_models_users        : 'users',
 }

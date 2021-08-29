@@ -4,7 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var expressLayouts = require('express-ejs-layouts');
+var expressLayouts          = require('express-ejs-layouts');
+const mongoose              = require('mongoose');
+const validator             = require('express-validator');
 
 var pathConfig              = require('./path');
 
@@ -14,7 +16,10 @@ global.__base               = __dirname + '/';
 // my_app
 global.__path_myapp         = __base  + pathConfig.folder_myapp + '/';
 global.__path_configs       = __path_myapp + pathConfig.folder_configs + '/';
-global.folder_models       = __path_myapp + pathConfig.folder_models + '/';
+global.__path_models       	= __path_myapp + pathConfig.folder_models + '/';
+global.__path_validators   	= __path_myapp + pathConfig.folder_validators + '/';
+global.__path_helpers   	= __path_myapp + pathConfig.folder_helpers + '/';
+global.__path_schemas   	= __path_myapp + pathConfig.folder_schemas + '/';
 
 // public
 global.__path_public        = __base  + pathConfig.folder_public + '/';
@@ -26,10 +31,22 @@ global.__path_routes        = __path_myapp + pathConfig.folder_routes + '/';
 global.__path_views         = __path_myapp + pathConfig.folder_views + '/';
 global.__path_users         = __path_views + pathConfig.folder_users + '/';
 
+// Models
+global.__path_models_admin       	= __path_models + pathConfig.folder_models_admin + '/';
+global.__path_models_users       	= __path_models + pathConfig.folder_models_users + '/';
+
 var systemConfig            = require(__path_configs + 'system');
+const databaseConfig        = require(__path_configs + 'database');
 
 var app = express();
-
+// Database
+mongoose.connect(`mongodb://localhost/${databaseConfig.database}`, {
+	keepAlive: true,
+	useNewUrlParser: true,
+	useCreateIndex: true,
+	useFindAndModify: false,
+	useUnifiedTopology: true
+});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -41,9 +58,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressLayouts);
-
+app.use(validator());
 // Setup router
 app.use(`/${systemConfig.prefixUsers}`, require(__path_routes + 'users/index'));
+
+//Local Variable
+app.locals.systemConfig     = systemConfig;
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
