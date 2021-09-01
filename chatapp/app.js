@@ -3,11 +3,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var passport = require('passport');
 var expressLayouts          = require('express-ejs-layouts');
 const mongoose              = require('mongoose');
 const validator             = require('express-validator');
-
+const session 			        = require('express-session');
 var pathConfig              = require('./path');
 
 // Define Path
@@ -58,7 +58,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressLayouts);
-app.use(validator());
+app.use(session({
+	secret: 'secret',
+	cookie: {maxAge: 10*60*1000},
+	resave: false,
+	saveUninitialized: false,
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 // Setup router
 app.use(`/${systemConfig.prefixUsers}`, require(__path_routes + 'users/index'));
 

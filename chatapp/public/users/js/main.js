@@ -14,5 +14,11 @@ $( document ).ready(function() {
     })
     setTimeout(function(){ 
         $("div.notify").css({'display':'none'})
-    }, 10000);
+    }, 5000);
+    $('input[name="password"]').keyup(function (){
+        $('i#show-hidden-password').css('display', 'block');
+    });
+    if($('input[name="password"]').val() !=''){
+        $('i#show-hidden-password').css('display', 'block');
+    }
 });

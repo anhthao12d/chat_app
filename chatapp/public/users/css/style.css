@@ -278,6 +278,7 @@ div .icon-input {
 	margin-left: 10px;
 }
 div #show-hidden-password {
+	display: none;
 	position: absolute;
 	margin-top: 20px;
 	margin-left: 260px;

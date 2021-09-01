@@ -1,14 +1,9 @@
-<% include ../../helpers/sing-up %>
+<% include ../../helpers/singin-singup %>
 <div class="container">
 	<div class="form-container sign-up-container">
 		<form action="<%= systemConfig.prefixUsers %>accounts/sing-up" method="POST">
 			<h1>Tạo tài khoản</h1>
-			<div class="social-container">
-				<a href="#" class="social" id="sing-up"><i class="fab fa-facebook-f"></i></a>
-				<a href="#" class="social" id="sing-up"><i class="fab fa-google-plus-g"></i></a>
-			</div>
-			<span>hoặc sử dụng E-Mail của bạn để đăng ký</span>
-			<%- singUpHelper(item,err) %> 
+			<%- authenticationHelper(systemConfig.prefixUsers, item, err, {task : 'sing-up'}) %>  
 			<button style="margin-top: 10px;" id="sing-up" >Đăng kí</button>
 		</form>
 	</div>

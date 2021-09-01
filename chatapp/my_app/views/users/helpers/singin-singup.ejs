@@ -1,15 +1,35 @@
 <% 
-    singInHelper = (data,err,options = null) => {
-       
+    authenticationHelper = (link, data, err, options = null) => {
+        let name = ``;
         let email = `<div class='login-register'><i class="fas fa-envelope icon-input"></i><input  value="${data.email}" name="email" type="email" placeholder="Email" /></div>`
         let password = `<div class='login-register'><i class="fas fa-lock icon-input"></i><i class="fas fa-eye" id="show-hidden-password" data-show="fas fa-eye" data-hidden="fas fa-eye-slash"></i>
                         <input value="${data.password}" name="password" id='password' type="password" placeholder="Mật khẩu" /></div>`
-                        let param = [];
+        let social = ` <div class="social-container">
+                    <a href="${link}/accounts/auth/facebook" class="social" id="sing-in"><i class="fab fa-facebook-f"></i></a>
+                    <a href="${link}/accounts/auth/google" class="social" id="sing-in"><i class="fab fa-google-plus-g"></i></a>
+                </div>`;
+        let singinSpan = `<span>hoặc đăng nhập bằng E-Mail</span>`;
+        let singupSpan = `<span>hoặc sử dụng E-Mail của bạn để đăng ký</span>`;
+
+        if(options.task == 'sing-up'){
+            name = `<div class='login-register'><i class="fas fa-user icon-input"></i><input value="${data.name}" name="name" type="text" placeholder="Tên" /></div>`
+        }
+
+        let param = [];
         err.forEach( async(element) => {
             await param.push(element.param)
         });
 
         if(err.length > 0){
+            if(options.task == 'sing-up'){
+                if(param.indexOf('name') != -1) {
+                    let  index = param.indexOf('name');
+                    name = `<div class='login-register'><i class="fas fa-user icon-input"></i><input value="${data.name}" class="input errors" name="name" type="text" placeholder="Tên" />
+                    <span ><i class="fas fa-exclamation-triangle"></i>  ${err[index].msg}</span></div>`
+                } else {
+                name = `<div class='login-register'><i class="fas fa-user icon-input"></i><input value="${data.name}" class="success-input" name="name" type="text" placeholder="Tên" /></div>`
+                }
+            }
             if(param.indexOf('email') != -1){
                 let  index = param.indexOf('email');
                 email = `<div class='login-register'><i class="fas fa-envelope icon-input"></i><input value="${data.email}" class="input errors" name="email" type="email" placeholder="Email" />
@@ -27,9 +47,12 @@
                             <input value="${data.password}" id='password' class="success-input" name="password" type="password" placeholder="Mật khẩu" /></div>`
             }
         }
+        let xhtml = social + singinSpan + email + password;
+        if(options.task == 'sing-up'){
+            xhtml = social + singupSpan + name + email + password;
+        }
         return `
-                ${email}
-                ${password}
+                ${xhtml}
                     `
         
     }

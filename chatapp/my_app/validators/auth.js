@@ -6,25 +6,19 @@ const options   = {
    
 };
 module.exports  = {
-    validatorRegister: (req) => {
-        req.checkBody('name', notifyConfig.ERROR_NAME)
-            .not().isEmpty()
-        req.checkBody('email', notifyConfig.ERROR_EMAIL)
-            .isEmail()
-        req.checkBody('password', util.format(notifyConfig.ERROR_PASSWORD_LENGTH, options.password.min))
+    validatorRegister: [
+        body('name', notifyConfig.ERROR_NAME)
+            .not().isEmpty(),
+        body('email', notifyConfig.ERROR_EMAIL)
+            .isEmail(),
+        body('password', util.format(notifyConfig.ERROR_PASSWORD_LENGTH, options.password.min))
             .isLength({min: options.password.min})
-
-        let errors = req.validationErrors() !== false ? req.validationErrors() : [];
-        return errors;
-    },
-    validatorLogin: (req) => {
-        req.checkBody('email', notifyConfig.ERROR_EMAIL)
-            .isEmail()
-        req.checkBody('password', util.format(notifyConfig.ERROR_PASSWORD_LENGTH, options.password.min))
+    ],
+    validatorLogin: [
+        body('email', notifyConfig.ERROR_EMAIL)
+            .isEmail(),
+        body('password', util.format(notifyConfig.ERROR_PASSWORD_LENGTH, options.password.min))
             .isLength({min: options.password.min})
-
-        let errors = req.validationErrors() !== false ? req.validationErrors() : [];
-        return errors;
-    }
+    ]
     
 }
